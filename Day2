@@ -1,0 +1,141 @@
+#!/bin/bash
+
+#debugging
+set -x
+
+#aws ec2 describe-vpcs --region us-west-1 --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId"
+# output
+###[svc-gfilinux@lax-mgt-noc001 ~]$ sh describe-vpc.sh
+###"vpc-72abc716"
+
+###############################################################
+#declaring variable
+
+REGION='us-west-1'
+aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId"
+
+#putput
+##[root@lax-mgt-noc001 ~]$ sh describe-vpc.sh
+##"vpc-72abc716"
+
+####################################################################
+## passing argument to scripts
+#to take the value while executing the script
+REGION=$1
+aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+
+# sh describe-vpc.sh us-west-1
+#output
+#[root@lax-mgt-noc001 ~]$ sh describe-vpc.sh us-west-1
+#vpc-72abc716
+
+####################################################################
+# explanatipon of $0 $1 $2 $3
+
+#testing the $0  $1 $ 2 $3
+echo $0
+echo $1
+echo $2
+echo $3
+
+output :-
+sh describe-vpc.sh pramod pratik rahul
+describe-vpc.sh ---- >$0
+pramod ---- >$1
+pratik ---- >$2
+rahul ---- >$3
+
+######## $? explanation
+awd --version
+if [$? -eq 0]; then
+  REGION=$1
+  aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+else
+  echo 'incorrect command'
+fi
+
+####################################################################################
+### /dev/null
+echo 'xyx' >/dev/null
+
+#similary we can add this in script
+awd --version 2>/dev/nul #--- supraise the command error in output
+if [$? -eq 0]; then
+  REGION=$1
+  aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+else
+  echo 'incorrect command'
+fi
+
+#now correct the command and try the same script
+aws --version 2>/dev/nul #--- supraise the command error in output
+if [$? -eq 0]; then
+  REGION=$1
+  aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+else
+  echo 'incorrect command'
+fi
+sh describe.sh us-west-1
+
+###########################################################
+#Now the above scripte will take only one paramater  while executing suppose we need to pass multiple envs we can achive this
+#  '$@' --- character
+
+aws --version
+if [ $? -eq 0 ]; then
+  REGIONS=$@
+  for REGION in ${REGIONS}; do
+    aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+  done
+
+else
+  echo "Command incorrect"
+
+fi
+
+sh describe.sh us-west1 us-west2 us-west3
+# in this the above 3 argument (regions ) will assign to ----> $@
+
+##################################################################################################
+
+##   "$*"" and $?   try 10 examples for this
+
+##########################################################################################################
+##   $# argument
+
+aws --version
+if [ $? -eq 0 ]; then
+  REGIONS=$@
+  for REGION in ${REGIONS}; do
+    aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+  done
+
+else
+  echo "Command incorrect"
+
+fi
+echo $# ------ system gets the count of argument from this
+
+sh describe.sh us-west1 us-west2 us-west3 --- we pass 3 argument and $# will diplay the same >here
+
+#---Now we can create a script if argument is not passed it will  give us error  notification
+
+if [ $# -gt 0 ]; then
+  aws --version
+  if [ $? -eq 0 ]; then
+    REGIONS=$@
+    for REGION in ${REGIONS}; do
+      aws ec2 describe-vpcs --region ${REGION} --profile MicroservicesInternal-Administrators | jq ".Vpcs[].VpcId" -r
+    done
+
+  else
+    echo "Command incorrect"
+
+  fi
+else
+  echo 'Please pass the argument'
+fi
+
+sh describe.sh us-west1 us-west2 us-west3
+
+##########################################################
