@@ -1,0 +1,99 @@
+Devsecops :---
+Syllabus :- https://github.com/saikiranpi/Mastering-DevSecOps
+
+Day 1 :----
+1. variables
+scripts
+grep
+awk
+cut
+arguments
+passingSpecialParams
+OutputRedirection
+For
+WhileUserAutomation
+Regex
+Break
+Continue
+CustomExitCodes
+Fucntions
+Scripts 
+
+--Git 
+Introduction to git version control application
+Git repositories 
+GitHub Aujtentication 
+Adding 
+commiting 
+renaming 
+deletingfiles 
+GitHub branches 
+merging webhooks
+understanding stash 
+diff
+rebase
+fetch 
+pull 
+push
+
+--Terraform and Packer 
+
+undresating providers
+variales 
+states 
+locals
+using terraform function for terraform productivity
+configuring remote state using aws simple storage service 
+unbdersatnding terraform function 
+creating terraform modules .
+creating worksapces in terraform enterprises (TFE)
+Intorduction to packer 
+creating aws ami using packer 
+intro to packer 
+integration of GitHub ,packer, terraform with Jenkins 
+
+
+---Docker :-
+--- Ansible 
+ Diff betw ansible vs puppet vs chef 
+Understanding  Ansible arch
+Configure ansible Lab platform 
+Intergration Ansible with Terraform Packer 
+Ansible playbooks , Roles , varaiable template
+leverage ansible galaxy for roles
+
+---Jenkins 
+Install configure 
+Features Master-slave Architec of Jenkins 
+Configure slave in ec2 and Docker container 
+configure Jenkinsjob , RBAC , Plugins 
+Creating and managing scripted and declarative pipelins 
+Creating multipipe pipelines with Jenkins blue ocean
+CI/CD config pipeline 
+integrating with maven jfrog for springboot application 
+Integrating sonarcube with code quality , code coverage and 
+Intergrating with Jenkins with aws gitub docker 
+configure Jenkins notification for slack 
+
+
+Security Tools :- 
+Sonarcube quality 
+Hashicorp vault for passwords
+trivy container scanning 
+secret scanning in Terraform and Ansible code 
+Ansible Vault for Secret Mgmg
+
+
+
+Build and monitoring 
+Insalling Maven 
+Maven Lifecycle and performing builds 
+Understanding Maven Build lifecycle 
+Integrating with Jfrog for maven deploy 
+Intro to Promethuus monitoring 
+Installing promethus and config Linux server node exportes 
+creating Grafana dashboard 
+understaning alert mamagement 
+
+
+
