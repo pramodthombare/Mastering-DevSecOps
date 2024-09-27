@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/444b2b75-972e-4e19-a319-dadc25f14c2c)
+
+
 **Mastering DevSecOps**
 
 1. Shell Scripting Basics:
