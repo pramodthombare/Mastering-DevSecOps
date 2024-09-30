@@ -1,0 +1,111 @@
+User automation
+Task ---
+1. check the username and if the usewr dont exist then create the user
+2. Create random password wit special chars
+3. Force the user to reset the password during first time login
+
+
+cat /etc/passwd | grep -i -w  ubuntu   ----> -w will display only matched string
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    USER=$1
+    echo $USER
+else
+    echo "please Eneter the valid parameter"
+fi
+
+
+#####
+
+if [ $# -eq 0 ]; then
+    USER=$1
+    echo $USER
+    EXISTING_USER=$(cat /etc/passwd | grep -i -w  $USER | cut -d ":" -f1)
+    if [ "${$USER}" = "$(EXISTING_USER)" ]; then
+    echo "The $USER you have entered is already present in machine , enter another user"
+    else
+    echo "lets add user"
+    sudo useradd -m $USER --shell /bin/bash
+    fi
+else
+    echo "please Eneter the valid parameter
+fi
+
+
+
+###################creating Random password #################
+for i in ${1..10}; do echo $RANDOM ; done 
+
+echo ' !@#$%^&*(_) '     
+echo ' !@#$%^&*(_) ' | fold -w1  --> tp print this in horitzontal --- we can give w2 , w3 for pairs 
+echo ' !@#$%^&*(_) ' | fold -w1 | shuf   --- shuffle everytime no same output
+
+
+if [ $# -eq 0 ]; then
+    USER=$1
+    echo $USER
+    EXISTING_USER=$(cat /etc/passwd | grep -i -w  $USER | cut -d ":" -f1)
+    if [ "${$USER}" = "$(EXISTING_USER)" ]; then
+    echo "The $USER you have entered is already present in machine , enter another user"
+    else
+    echo "lets add user"
+    sudo useradd -m $USER --shell /bin/bash
+    SPECS=$(echo ' !@#$%^&*(_) ' | fold -w1 | shuf | head -1)
+    PASSWORD="IndianTech@${RANDOM}${SPECS}"
+    echo "$USER:$PASSWORD" | sudo chpasswd
+    echo "The temprory password is generated ${USER} is ${PASSWORD}"
+    passwd -e $USER
+    fi
+else
+    echo "please Eneter the valid parameter
+fi
+
+
+### create multiple user 
+
+if [ $# -eq 0 ]; then
+for USER in $@; do
+    echo $USER
+    EXISTING_USER=$(cat /etc/passwd | grep -i -w  $USER | cut -d ":" -f1)
+    if [ "${$USER}" = "$(EXISTING_USER)" ]; then
+    echo "The $USER you have entered is already present in machine , enter another user"
+    else
+    echo "lets add user"
+    sudo useradd -m $USER --shell /bin/bash
+    SPECS=$(echo ' !@#$%^&*(_) ' | fold -w1 | shuf | head -1)
+    PASSWORD="IndianTech@${RANDOM}${SPECS}"
+    echo "$USER:$PASSWORD" | sudo chpasswd
+    echo "The temprory password is generated ${USER} is ${PASSWORD}"
+    passwd -e $USER
+    fi
+done
+
+else
+    echo "please Eneter the valid parameter
+fi
+
+
+### REGEX ###
+if any pass username it hsould be alha not in numeric valude
+
+if [ $# -eq 0 ]; then
+    for USER in $@; do
+        echo $USER
+        if [[ $USER =~ ^[a-zA-Z]+$ ]]; then
+            EXISTING_USER=$(cat /etc/passwd | grep -i -w  $USER | cut -d ":" -f1)
+            if [ "${$USER}" = "$(EXISTING_USER)" ]; then
+                echo "The $USER you have entered is already present in machine , enter another user"
+            else
+                echo "lets add user"
+                sudo useradd -m $USER --shell /bin/bash
+                SPECS=$(echo ' !@#$%^&*(_) ' | fold -w1 | shuf | head -1)
+                PASSWORD="IndianTech@${RANDOM}${SPECS}"
+                echo "$USER:$PASSWORD" | sudo chpasswd
+                echo "The temprory password is generated ${USER} is ${PASSWORD}"
+                passwd -e $USER
+            fi
+    done
+else
+    echo "please Eneter the valid parameter
+fi
