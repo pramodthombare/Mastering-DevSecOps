@@ -1,0 +1,67 @@
+#understanding output redirection consept 
+
+example 1 
+ls -l    -----> this is command (STDIN)
+output of this command will be (STDOUT )
+
+example 2 
+]$ awd           -----command 
+-bash: awd: command not found   ---output ----> (STDERR)
+
+understanding via script 
+
+#!/bin/bash
+
+df -h 
+awd 
+free 
+cod 
+
+
+run  the above script 
+
+1----> test.sh 2> /dev/null     ------   If we dnt want to display non sucessfull command 
+
+[svc-gfilinux@lax-mgt-noc001 tmp]$ sh test.sh 2> /dev/null
+Filesystem                                                                                                             Size  Used Avail Use% Mounted on
+devtmpfs                                                                                                               3.8G     0  3.8G   0% /dev
+tmpfs                                                                                                                  3.9G  384K  3.9G   1% /dev/shm
+tmpfs                                                                                                                  3.9G  5.1M  3.9G   1% /run
+tmpfs                                                                                                                  3.9G     0  3.9G   0% /sys/fs/cgroup
+/dev/mapper/vg1-root                                                                                                    60G   53G  7.0G  89% /
+/dev/sda1                                                                                                             1014M  292M  723M  29% /boot
+/dev/mapper/vg2-var                                                                                                    100G   24G   77G  24% /var
+lax-prd-isilon01su:/ifs/LAX-ISILON1/activeDirectory/csodprod.corp/csodprod2/sqlbackup2/DND/LnS_QA_Backup/Mongo_Backup  275T   73T  197T  27% /isilon_win_lns
+tmpfs                                                                                                                  781M     0  781M   0% /run/user/1001
+              total        used        free      shared  buff/cache   available
+Mem:        7989856     2139004      493012        4396     5357840     5540612
+Swap:       4194300      259840     3934460
+
+2---> test.sh 1> /dev/null   ---> this will not display succesfull command (its to discard )
+
+
+[svc-gfilinux@lax-mgt-noc001 tmp]$ sh test.sh 1> /dev/null
+test.sh: line 4: awd: command not found
+test.sh: line 6: cod: command not found
+
+
+sh test.sh > /tmp/error1 2>&1  this will store STDOUT and STDERR in file and never display 
+
+#tee command 
+sh test.sh | tee > /tmp/error2
+
+
+#####################################################################
+Looping 
+
+For loop 
+While Loop 
+
+
+for i in {1..10}
+do 
+echo $i
+done 
+
+# to monitor website 
+while true; do curl -SL https://google.com | grep -i google; sleep 1; done 
